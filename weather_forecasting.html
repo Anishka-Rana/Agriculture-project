@@ -1,0 +1,70 @@
+<!-- Backend/templates/weather_forecasting.html -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>🌧️ Weather Forecasting</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/dashboard.css') }}" />
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-logo">🌾 AI Agriculture</div>
+    </header>
+
+    <!-- Sidebar -->
+    <nav class="sidebar">
+        <div class="sidebar-logo">🌾 AI Agriculture</div>
+        <ul class="sidebar-menu">
+            <li class="sidebar-item">
+                <a href="/">Home</a>
+            </li>
+            <li class="sidebar-item">
+                <a href="/price_prediction">Price Prediction</a>
+            </li>
+            <li class="sidebar-item">
+                <a href="/disease_detection">Disease Detection</a>
+            </li>
+            <li class="sidebar-item active">
+                <a href="/weather_forecasting">Weather Forecasting</a>
+            </li>
+        </ul>
+    </nav>
+
+    <!-- Main content -->
+    <main class="main">
+        <div class="card weather-card" style="padding:24px;">
+            <h2>🌧️ Weather Forecast</h2>
+            <p>Current weather conditions for your region (mock data for demo).</p>
+
+            <table style="
+                width:100%;
+                border-collapse: collapse;
+                margin-top: 10px;
+            ">
+                <thead>
+                    <tr style="background-color: #26a69a; color: white;">
+                        <th style="padding: 10px;">Location</th>
+                        <th style="padding: 10px;">Temperature</th>
+                        <th style="padding: 10px;">Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for loc in locations %}
+                    <tr style="
+                        background-color: #f9f9f9;
+                        border-bottom: 1px solid #ddd;
+                    ">
+                        <td style="padding: 10px; text-align: center;">{{ loc.name}}</td>
+                        <td style="padding: 10px; text-align: center;">{{ loc.temp }}</td>
+                        <td style="padding: 10px; text-align: center;">{{ loc.desc }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </main>
+</body>
+</html>

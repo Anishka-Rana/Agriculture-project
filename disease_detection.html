@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>🪴 Crop Disease Detection</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/dashboard.css') }}" />
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-logo">🌾 AI Agriculture</div>
+    </header>
+
+    <!-- Sidebar -->
+    <nav class="sidebar">
+        <div class="sidebar-logo">🌾 AI Agriculture</div>
+        <ul class="sidebar-menu">
+            <li class="sidebar-item">
+                <a href="/">Home</a>
+            </li>
+            <li class="sidebar-item">
+                <a href="/price_prediction">Price Prediction</a>
+            </li>
+            <li class="sidebar-item active">
+                <a href="/disease_detection">Disease Detection</a>
+            </li>
+            <li class="sidebar-item">
+                <a href="/weather_forecasting">Weather Forecasting</a>
+            </li>
+        </ul>
+    </nav>
+
+    <!-- Main content -->
+    <main class="main">
+        <div class="form-card">
+            <h2>🪴 Disease Detection</h2>
+            <p>Upload a leaf image of your crop to get AI powered disease diagnosis.</p>
+
+            <form id="uploadForm" method="POST" enctype="multipart/form-data">
+                <label for="leafImage">Upload Leaf Image</label>
+                <input
+                    type="file"
+                    id="leafImage"
+                    name="leafImage"
+                    accept="image/*"
+                    required
+                />
+
+                <button type="submit">Detect Disease</button>
+            </form>
+
+            <div id="result" class="result-box disease-card" style="margin-top:20px;display:none;"></div>
+            <div id="error" class="error-box" style="margin-top:20px;display:none;"></div>
+        </div>
+    </main>
+
+    <script src="{{ url_for('static', filename='js/dashboard.js') }}"></script>
+
+    <!-- JS only for disease detection -->
+    <script>
+        const form = document.getElementById("uploadForm");
+        constresultBox = document.getElementById("result");
+        consterrorBox = document.getElementById("error");
+
+        form.addEventListener("submit", async function (e) {
+            e.preventDefault();
+            resultBox.style.display = "none";
+            resultBox.innerHTML = "";
+            errorBox.style.display = "none";
+
+            constformData = new FormData(form);
+
+            try {
+                const response = await fetch("/disease/predict", {
+                    method: "POST",
+                    body: formData,
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    constprobList = data.probabilities
+                        .map((p, idx) => `<li>${data.all_classes[idx]}: ${(p * 100).toFixed(1)}%</li>`)
+                        .join("");
+
+                    resultBox.innerHTML = `
+                        <h3>Prediction Result</h3>
+                        <p><strong>Filename:</strong> ${data.filename}</p>
+                        <p><strong>Size:</strong> ${data.fixed_size}</p>
+                        <p><strong>Predicted:</strong> ${data.predicted_disease}</p>
+                        <p><strong>Confidence:</strong> ${data.confidence}</p>
+                        <h4>All probabilities</h4>
+                        <ul style="font-size:0.9rem; margin-top:8px;">${probList}</ul>
+                    `;
+                    resultBox.style.display = "block";
+                } else {
+                    errorBox.innerText = "Error: " + data.error;
+                    errorBox.style.display = "block";
+                }
+            } catch (err) {
+                errorBox.innerText =
+                    "Failed to connect to backend. Make sure Flask is running on port 5000.";
+                errorBox.style.display = "block";
+            }
+        });
+    </script>
+</body>
+</html>
+

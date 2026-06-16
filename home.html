@@ -1,0 +1,98 @@
+<!-- Backend/templates/home.html -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>🌾 AI Agriculture Dashboard</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/dashboard.css') }}" />
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-logo">🌾 AI Agriculture</div>
+    </header>
+
+    <!-- Sidebar -->
+    <nav class="sidebar">
+        <div class="sidebar-logo">🌾 AI Agriculture</div>
+        <ul class="sidebar-menu">
+            <li class="sidebar-item active">
+                <a href="/">Home</a>
+            </li>
+            <li class="sidebar-item">
+                <a href="/price_prediction">Price Prediction</a>
+            </li>
+            <li class="sidebar-item">
+                <a href="/disease_detection">Disease Detection</a>
+            </li>
+            <li class="sidebar-item">
+                <a href="/weather_forecasting">Weather Forecasting</a>
+            </li>
+        </ul>
+    </nav>
+
+    <!-- Main content -->
+    <main class="main">
+        <div class="form-card" style="max-width: none; padding:24px;">
+            <h2>🌾 Welcome to AI Agriculture Dashboard</h2>
+            <p>Welcome to an AI powered decision support system for farmers. Use this dashboard to predict crop prices, detect diseases, and view weather forecasts for your region.</p>
+
+            <!-- Main 3 Cards (user friendly) -->
+            <div style="
+                display: grid;
+                grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+                gap: 24px;
+                margin-top: 24px;
+            ">
+
+                <!-- Price Prediction Card -->
+                <a href="/price_prediction" class="card-link">
+                    <div class="card weather-card" style="
+                        padding:24px;
+                        border-radius:12px;
+                        box-shadow:0 6px 18px rgba(76,175,80,0.2);
+                    ">
+                        <h3 style="color: #4CAF50;">🌾 Crop Price Prediction</h3>
+                        <p><strong>What it does:</strong> Predicts expected price per kg of your crop based on month, location, and crop variety.</p>
+                        <p><strong>Best for:</strong> Planning when to sell your harvest for maximum profit.</p>
+                        <p style="margin-top:12px;"><strong>Click here to use Price Prediction →</strong></p>
+                    </div>
+                </a>
+
+                <!-- Disease Detection Card -->
+                <a href="/disease_detection" class="card-link">
+                    <div class="card weather-card" style="
+                        padding:24px;
+                        border-radius:12px;
+                        box-shadow:0 6px 18px rgba(255,167,38,0.2);
+                    ">
+                        <h3 style="color: #FF9800;">🐞 Crop Disease Detection</h3>
+                        <p><strong>What it does:</strong> Upload a leaf image and get AI based diagnosis of crop disease and confidence level.</p>
+                        <p><strong>Best for:</strong> Early detection and timely treatment of plant diseases.</p>
+                        <p style="margin-top:12px;"><strong>Click here to use Disease Detection →</strong></p>
+                    </div>
+                </a>
+
+                <!-- Weather Forecast Card -->
+                <a href="/weather_forecasting" class="card-link">
+                    <div class="card weather-card" style="
+                        padding:24px;
+                        border-radius:12px;
+                        box-shadow:0 6px 18px rgba(33,150,243,0.2);
+                    ">
+                        <h3 style="color: #2196F3;">🌧️ Weather Forecasting</h3>
+                        <p><strong>What it does:</strong> Shows simple temperature and condition view for your district (for demo).</p>
+                        <p><strong>Best for:</strong> Planning sowing, harvesting, and irrigation.</p>
+                        <p style="margin-top:12px;"><strong>Click here to view Weather Forecast →</strong></p>
+                    </div>
+                </a>
+
+            </div>
+        </div>
+    </main>
+
+    <script src="{{ url_for('static', filename='js/dashboard.js') }}"></script>
+</body>
+</html>
